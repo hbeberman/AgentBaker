@@ -3,6 +3,8 @@ NODE_INDEX=$(hostname | tail -c 2)
 NODE_NAME=$(hostname)
 if [[ $OS == $COREOS_OS_NAME ]]; then
     PRIVATE_IP=$(ip a show eth0 | grep -Po 'inet \K[\d.]+')
+elif [[ $OS == $MARINER_OS_NAME ]]; then
+    PRIVATE_IP=$(hostname -i | cut -d' ' -f1)
 else
     PRIVATE_IP=$(hostname -I | cut -d' ' -f1)
 fi

@@ -22,30 +22,20 @@
       "client_secret": "{{user `client_secret`}}",
       "tenant_id": "{{user `tenant_id`}}",
       "subscription_id": "{{user `subscription_id`}}",
+      "resource_group_name": "{{user `resource_group_name`}}",
+      "storage_account": "{{user `storage_account_name`}}",
+      "capture_container_name": "aks-vhds",
+      "capture_name_prefix": "aks-{{user `create_time`}}",
       "os_type": "Linux",
       "os_disk_size_gb": 30,
-      "image_publisher": "Canonical",
-      "image_offer": "UbuntuServer",
-      "image_sku": "18_04-LTS-GEN2",
-      "image_version": "latest",
+      "image_url": "{{env `IMAGEURL`}}",
       "azure_tags": {
         "os": "Linux",
         "now": "{{user `create_time`}}",
         "createdBy": "aks-vhd-pipeline"
       },
       "location": "{{user `location`}}",
-      "vm_size": "{{user `vm_size`}}",
-      "managed_image_resource_group_name": "{{user `resource_group_name`}}",
-      "managed_image_name": "1804Gen2-{{user `create_time`}}",
-      "shared_image_gallery_destination": {
-        "resource_group": "{{user `resource_group_name`}}",
-        "gallery_name": "PackerSigGalleryEastUS",
-        "image_name": "1804Gen2",
-        "image_version": "1.0.{{user `create_time`}}",
-        "replication_regions": [
-          "{{user `location`}}"
-        ]
-      }
+      "vm_size": "{{user `vm_size`}}"
     }
   ],
   "provisioners": [
@@ -73,7 +63,7 @@
     },
     {
       "type": "file",
-      "source": "parts/linux/cloud-init/artifacts/cse_install_ubuntu.sh",
+      "source": "parts/linux/cloud-init/artifacts/cse_install_mariner.sh",
       "destination": "/home/packer/provision_installs_distro.sh"
     },
     {
@@ -83,7 +73,7 @@
     },
     {
       "type": "file",
-      "source": "parts/linux/cloud-init/artifacts/cse_helpers_ubuntu.sh",
+      "source": "parts/linux/cloud-init/artifacts/cse_helpers_mariner.sh",
       "destination": "/home/packer/provision_source_distro.sh"
     },
     {
@@ -98,13 +88,8 @@
     },
     {
       "type": "file",
-      "source": "vhdbuilder/scripts/linux/tool_installs_ubuntu.sh",
+      "source": "vhdbuilder/scripts/linux/tool_installs_mariner.sh",
       "destination": "/home/packer/tool_installs_distro.sh"
-    },
-    {
-      "type": "file",
-      "source": "vhdbuilder/packer/asc-baseline-1.0.0-35.amd64.deb",
-      "destination": "/home/packer/asc-baseline.deb"
     },
     {
       "type": "file",
@@ -178,13 +163,13 @@
     },
     {
       "type": "file",
-      "source": "parts/linux/cloud-init/artifacts/update-node-labels.sh",
-      "destination": "/home/packer/update-node-labels.sh"
+      "source": "parts/linux/cloud-init/artifacts/label-nodes.sh",
+      "destination": "/home/packer/label-nodes.sh"
     },
     {
       "type": "file",
-      "source": "parts/linux/cloud-init/artifacts/update-node-labels.service",
-      "destination": "/home/packer/update-node-labels.service"
+      "source": "parts/linux/cloud-init/artifacts/label-nodes.service",
+      "destination": "/home/packer/label-nodes.service"
     },
     {
       "type": "file",
@@ -274,14 +259,8 @@
     {
       "type": "shell",
       "inline": [
-        "sudo FEATURE_FLAGS={{user `feature_flags`}} BUILD_NUMBER={{user `build_number`}} BUILD_ID={{user `build_id`}} COMMIT={{user `commit`}} HYPERV_GENERATION={{user `hyperv_generation`}} CONTAINER_RUNTIME={{user `container_runtime`}} TELEPORTD_PLUGIN_DOWNLOAD_URL={{user `teleportd_plugin_download_url`}} SGX_DEVICE_PLUGIN_INSTALL=True /bin/bash -ux /home/packer/install-dependencies.sh"
+        "sudo FEATURE_FLAGS={{user `feature_flags`}} BUILD_NUMBER={{user `build_number`}} BUILD_ID={{user `build_id`}} COMMIT={{user `commit`}} HYPERV_GENERATION={{user `hyperv_generation`}} CONTAINER_RUNTIME={{user `container_runtime`}} TELEPORTD_PLUGIN_DOWNLOAD_URL={{user `teleportd_plugin_download_url`}} /bin/bash -ux /home/packer/install-dependencies.sh"
       ]
-    },
-    {
-      "type": "file",
-      "direction": "download",
-      "source": "/opt/azure/vhd-install.complete",
-      "destination": "release-notes.txt"
     },
     {
       "type": "shell",
