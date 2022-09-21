@@ -30,10 +30,10 @@
       "os_type": "Linux",
       "os_disk_size_gb": 30,
       "shared_image_gallery": {
-        "subscription": "SUBSCRIPTION",
-        "resource_group": "RG",
-        "gallery_name": "GALLERY",
-        "image_name": "IMAGE",
+        "subscription": "{{user `subscription_id`}}",
+        "resource_group": "{{user `resource_group_name`}}",
+        "gallery_name": "PackerSigGalleryEastUS",
+        "image_name": "{{user `imported_image_name`}}",
         "image_version": "latest"
       },
       "azure_tags": {
