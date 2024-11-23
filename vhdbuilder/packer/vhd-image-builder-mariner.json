@@ -91,491 +91,715 @@
       ]
     },
     {
+      "required": "todo",
+      "status": "todo",
       "type": "file",
       "source": "vhdbuilder/lister/bin/lister",
       "destination": "/home/packer/lister"
     },
     {
+      "required": "todo",
+      "status": "todo",
       "type": "file",
       "source": "aks-node-controller/bin/aks-node-controller-linux-amd64",
       "destination": "/home/packer/aks-node-controller"
     },
     {
+      "required": "todo",
+      "status": "todo",
       "type": "file",
       "source": "parts/linux/cloud-init/artifacts/aks-node-controller.service",
       "destination": "/home/packer/aks-node-controller.service"
     },
     {
+      "required": "false",
+      "note": "generated",
+      "status": "done",
       "type": "file",
       "source": "vhdbuilder/packer/prefetch.sh",
       "destination": "/home/packer/prefetch.sh"
     },
     {
+      "required": "false",
+      "status": "done",
       "type": "file",
       "source": "vhdbuilder/packer/cleanup-vhd.sh",
       "destination": "/home/packer/cleanup-vhd.sh"
     },
     {
+      "required": "false",
+      "status": "done",
       "type": "file",
       "source": "vhdbuilder/packer/packer_source.sh",
       "destination": "/home/packer/packer_source.sh"
     },
     {
+      "required": "false",
+      "note": "reimplement",
+      "status": "done",
       "type": "file",
       "source": "parts/linux/cloud-init/artifacts/cse_install.sh",
       "destination": "/home/packer/provision_installs.sh"
     },
     {
+      "required": "false",
+      "note": "reimplement",
+      "status": "done",
       "type": "file",
       "source": "parts/linux/cloud-init/artifacts/mariner/cse_install_mariner.sh",
       "destination": "/home/packer/provision_installs_distro.sh"
     },
     {
+      "required": "false",
+      "note": "reimplement",
+      "status": "done",
       "type": "file",
       "source": "parts/linux/cloud-init/artifacts/cse_helpers.sh",
       "destination": "/home/packer/provision_source.sh"
     },
     {
+      "required": "false",
+      "note": "reimplement",
+      "status": "done",
       "type": "file",
       "source": "parts/linux/cloud-init/artifacts/cse_benchmark_functions.sh",
       "destination": "/home/packer/provision_source_benchmarks.sh"
     },
     {
+      "required": "false",
+      "status": "done",
       "type": "file",
       "source": "parts/linux/cloud-init/artifacts/mariner/cse_helpers_mariner.sh",
       "destination": "/home/packer/provision_source_distro.sh"
     },
     {
+      "required": "true",
+      "status": "todo",
       "type": "file",
       "source": "parts/linux/cloud-init/artifacts/cse_config.sh",
       "destination": "/home/packer/provision_configs.sh"
     },
     {
+      "required": "true",
+      "status": "done",
       "type": "file",
       "source": "parts/linux/cloud-init/artifacts/cse_main.sh",
       "destination": "/home/packer/provision.sh"
     },
     {
+      "required": "true",
+      "status": "done",
       "type": "file",
       "source": "parts/linux/cloud-init/artifacts/cse_start.sh",
       "destination": "/home/packer/provision_start.sh"
     },
     {
+      "required": "true",
+      "status": "done",
       "type": "file",
       "source": "parts/linux/cloud-init/artifacts/containerd_exec_start.conf",
       "destination": "/home/packer/containerd_exec_start.conf"
     },
     {
+      "required": "true",
+      "status": "done",
       "type": "file",
       "source": "parts/linux/cloud-init/artifacts/kubelet.service",
       "destination": "/home/packer/kubelet.service"
     },
     {
+      "required": "maybe",
+      "status": "done",
       "type": "file",
       "source": "parts/linux/cloud-init/artifacts/reconcile-private-hosts.sh",
       "destination": "/home/packer/reconcile-private-hosts.sh"
     },
     {
+      "required": "true",
+      "status": "done",
       "type": "file",
       "source": "parts/linux/cloud-init/artifacts/block_wireserver.sh",
       "destination": "/home/packer/block_wireserver.sh"
     },
     {
+      "required": "true",
+      "status": "done",
       "type": "file",
       "source": "parts/linux/cloud-init/artifacts/ensure_imds_restriction.sh",
       "destination": "/home/packer/ensure_imds_restriction.sh"
     },
     {
+      "required": "true",
+      "status": "done",
       "type": "file",
       "source": "parts/linux/cloud-init/artifacts/cse_redact_cloud_config.py",
       "destination": "/home/packer/cse_redact_cloud_config.py"
     },
     {
+      "required": "true",
+      "status": "done",
       "type": "file",
       "source": "parts/linux/cloud-init/artifacts/cse_send_logs.py",
       "destination": "/home/packer/cse_send_logs.py"
     },
     {
+      "required": "future",
+      "note": "reimplement",
+      "status": "todo",
       "type": "file",
       "source": "parts/linux/cloud-init/artifacts/init-aks-custom-cloud.sh",
       "destination": "/home/packer/init-aks-custom-cloud.sh"
     },
     {
+      "required": "maybe",
+      "status": "done",
       "type": "file",
       "source": "parts/linux/cloud-init/artifacts/reconcile-private-hosts.service",
       "destination": "/home/packer/reconcile-private-hosts.service"
     },
     {
+      "required": "future",
+      "status": "todo",
       "type": "file",
       "source": "parts/linux/cloud-init/artifacts/mig-partition.service",
       "destination": "/home/packer/mig-partition.service"
     },
     {
+      "required": "true",
+      "note": "reimplement",
+      "status": "todo",
       "type": "file",
       "source": "parts/linux/cloud-init/artifacts/bind-mount.sh",
       "destination": "/home/packer/bind-mount.sh"
     },
     {
+      "required": "true",
+      "status": "done",
       "type": "file",
       "source": "parts/linux/cloud-init/artifacts/bind-mount.service",
       "destination": "/home/packer/bind-mount.service"
     },
     {
+      "required": "true",
+      "status": "done",
       "type": "file",
       "source": "parts/linux/cloud-init/artifacts/enable-dhcpv6.sh",
       "destination": "/home/packer/enable-dhcpv6.sh"
     },
     {
+      "required": "true",
+      "status": "done",
       "type": "file",
       "source": "parts/linux/cloud-init/artifacts/dhcpv6.service",
       "destination": "/home/packer/dhcpv6.service"
     },
     {
+      "required": "true",
+      "status": "done",
       "type": "file",
       "source": "parts/linux/cloud-init/artifacts/sync-container-logs.sh",
       "destination": "/home/packer/sync-container-logs.sh"
     },
     {
+      "required": "true",
+      "status": "done",
       "type": "file",
       "source": "parts/linux/cloud-init/artifacts/sync-container-logs.service",
       "destination": "/home/packer/sync-container-logs.service"
     },
     {
+      "required": "true",
+      "status": "done",
       "type": "file",
       "source": "parts/linux/cloud-init/artifacts/crictl.yaml",
       "destination": "/home/packer/crictl.yaml"
     },
     {
+      "required": "true",
+      "status": "done",
       "type": "file",
       "source": "parts/linux/cloud-init/artifacts/ensure-no-dup.sh",
       "destination": "/home/packer/ensure-no-dup.sh"
     },
     {
+      "required": "true",
+      "status": "done",
       "type": "file",
       "source": "parts/linux/cloud-init/artifacts/ensure-no-dup.service",
       "destination": "/home/packer/ensure-no-dup.service"
     },
     {
+      "required": "maybe",
+      "status": "todo",
       "type": "file",
       "source": "parts/linux/cloud-init/artifacts/teleportd.service",
       "destination": "/home/packer/teleportd.service"
     },
     {
+      "required": "future",
+      "status": "todo",
       "type": "file",
       "source": "parts/linux/cloud-init/artifacts/setup-custom-search-domains.sh",
       "destination": "/home/packer/setup-custom-search-domains.sh"
     },
     {
+      "required": "future",
+      "status": "todo",
       "type": "file",
       "source": "parts/linux/cloud-init/artifacts/cis.sh",
       "destination": "/home/packer/cis.sh"
     },
     {
+      "required": "future",
+      "status": "todo",
       "type": "file",
       "source": "parts/linux/cloud-init/artifacts/mariner/mariner-package-update.sh",
       "destination": "/home/packer/mariner-package-update.sh"
     },
     {
+      "required": "future",
+      "status": "todo",
       "type": "file",
       "source": "parts/linux/cloud-init/artifacts/mariner/package-update.service",
       "destination": "/home/packer/snapshot-update.service"
     },
     {
+      "required": "future",
+      "status": "todo",
       "type": "file",
       "source": "parts/linux/cloud-init/artifacts/mariner/package-update.timer",
       "destination": "/home/packer/snapshot-update.timer"
     },
     {
+      "required": "true",
+      "note": "reimplement",
+      "status": "todo",
       "type": "file",
       "source": "vhdbuilder/scripts/linux/tool_installs.sh",
       "destination": "/home/packer/tool_installs.sh"
     },
     {
+      "required": "true",
+      "status": "todo",
       "type": "file",
       "source": "vhdbuilder/scripts/linux/mariner/tool_installs_mariner.sh",
       "destination": "/home/packer/tool_installs_distro.sh"
     },
     {
+      "required": "true",
+      "note": "reimplement",
+      "status": "todo",
       "type": "file",
       "source": "vhdbuilder/packer/pre-install-dependencies.sh",
       "destination": "/home/packer/pre-install-dependencies.sh"
     },
     {
+      "required": "true",
+      "note": "reimplement",
+      "status": "todo",
       "type": "file",
       "source": "vhdbuilder/packer/install-dependencies.sh",
       "destination": "/home/packer/install-dependencies.sh"
     },
     {
+      "required": "true",
+      "note": "reimplement",
+      "status": "todo",
       "type": "file",
       "source": "vhdbuilder/packer/post-install-dependencies.sh",
       "destination": "/home/packer/post-install-dependencies.sh"
     },
     {
+      "required": "true",
+      "note": "reimplement",
+      "status": "todo",
       "type": "file",
       "source": "parts/linux/cloud-init/artifacts/components.json",
       "destination": "/home/packer/components.json"
     },
     {
+      "required": "true",
+      "note": "reimplement, generated",
+      "status": "todo",
       "type": "file",
       "source": "parts/linux/cloud-init/artifacts/manifest.json",
       "destination": "/home/packer/manifest.json"
     },
     {
+      "required": "true",
+      "status": "done",
       "type": "file",
       "source": "parts/linux/cloud-init/artifacts/sysctl-d-60-CIS.conf",
       "destination": "/home/packer/sysctl-d-60-CIS.conf"
     },
     {
+      "required": "true",
+      "status": "done",
       "type": "file",
       "source": "parts/linux/cloud-init/artifacts/sshd_config",
       "destination": "/home/packer/sshd_config"
     },
     {
+      "required": "true",
+      "status": "done",
       "type": "file",
       "source": "parts/linux/cloud-init/artifacts/rsyslog-d-60-CIS.conf",
       "destination": "/home/packer/rsyslog-d-60-CIS.conf"
     },
     {
+      "required": "true",
+      "status": "done",
       "type": "file",
       "source": "parts/linux/cloud-init/artifacts/logrotate-d-rsyslog-CIS.conf",
       "destination": "/home/packer/logrotate-d-rsyslog-CIS.conf"
     },
     {
+      "required": "future",
+      "status": "todo",
       "type": "file",
       "source": "parts/linux/cloud-init/artifacts/etc-issue",
       "destination": "/home/packer/etc-issue"
     },
     {
+      "required": "future",
+      "status": "todo",
       "type": "file",
       "source": "parts/linux/cloud-init/artifacts/etc-issue.net",
       "destination": "/home/packer/etc-issue.net"
     },
     {
+      "required": "true",
+      "status": "done",
       "type": "file",
       "source": "parts/linux/cloud-init/artifacts/modprobe-CIS.conf",
       "destination": "/home/packer/modprobe-CIS.conf"
     },
     {
+      "required": "true",
+      "status": "done",
       "type": "file",
       "source": "parts/linux/cloud-init/artifacts/pwquality-CIS.conf",
       "destination": "/home/packer/pwquality-CIS.conf"
     },
     {
+      "required": "true",
+      "status": "done",
       "type": "file",
       "source": "parts/linux/cloud-init/artifacts/pam-d-su",
       "destination": "/home/packer/pam-d-su"
     },
     {
+      "required": "true",
+      "status": "done",
       "type": "file",
       "source": "parts/linux/cloud-init/artifacts/mariner/pam-d-system-auth",
       "destination": "/home/packer/pam-d-system-auth"
     },
     {
+      "required": "true",
+      "status": "done",
       "type": "file",
       "source": "parts/linux/cloud-init/artifacts/mariner/pam-d-system-password",
       "destination": "/home/packer/pam-d-system-password"
     },
     {
+      "required": "false",
+      "status": "done",
       "type": "file",
       "source": "parts/linux/cloud-init/artifacts/pam-d-common-auth",
       "destination": "/home/packer/pam-d-common-auth"
     },
     {
+      "required": "false",
+      "status": "done",
       "type": "file",
       "source": "parts/linux/cloud-init/artifacts/pam-d-common-password",
       "destination": "/home/packer/pam-d-common-password"
     },
     {
+      "required": "true",
+      "status": "done",
       "type": "file",
       "source": "parts/linux/cloud-init/artifacts/profile-d-cis.sh",
       "destination": "/home/packer/profile-d-cis.sh"
     },
     {
+      "required": "true",
+      "status": "todo",
+      "note":"reimplement, this only acts on /sda but root could be /sdb sometimes... might be a bug",
       "type": "file",
       "source": "parts/linux/cloud-init/artifacts/disk_queue.service",
       "destination": "/home/packer/disk_queue.service"
     },
     {
+      "required": "true",
+      "status": "todo",
+      "note": "should this actually be in /opt/scripts... or in /opt/azure/containers",
       "type": "file",
       "source": "parts/linux/cloud-init/artifacts/cgroup-memory-telemetry.sh",
       "destination": "/home/packer/cgroup-memory-telemetry.sh"
     },
     {
+      "required": "true",
+      "status": "todo",
+      "note": "this is permissioned 644, maybe it should be 600 like the other services",
       "type": "file",
       "source": "parts/linux/cloud-init/artifacts/cgroup-memory-telemetry.service",
       "destination": "/home/packer/cgroup-memory-telemetry.service"
     },
     {
+      "required": "true",
+      "status": "todo",
+      "note": "this is permissioned 644, maybe it should be 600 like the other services",
       "type": "file",
       "source": "parts/linux/cloud-init/artifacts/cgroup-memory-telemetry.timer",
       "destination": "/home/packer/cgroup-memory-telemetry.timer"
     },
     {
+      "required": "true",
+      "status": "todo",
+      "note": "this is permissioned 644, maybe it should be 600 like the other services",
       "type": "file",
       "source": "parts/linux/cloud-init/artifacts/cgroup-pressure-telemetry.sh",
       "destination": "/home/packer/cgroup-pressure-telemetry.sh"
     },
     {
+      "required": "true",
+      "status": "todo",
+      "note": "this is permissioned 644, maybe it should be 600 like the other services",
       "type": "file",
       "source": "parts/linux/cloud-init/artifacts/cgroup-pressure-telemetry.service",
       "destination": "/home/packer/cgroup-pressure-telemetry.service"
     },
     {
+      "required": "true",
+      "status": "todo",
+      "note": "this is permissioned 644, maybe it should be 600 like the other services",
       "type": "file",
       "source": "parts/linux/cloud-init/artifacts/cgroup-pressure-telemetry.timer",
       "destination": "/home/packer/cgroup-pressure-telemetry.timer"
     },
     {
+      "required": "maybe",
+      "status": "todo",
+      "note": "Immutable /usr makes this hard",
       "type": "file",
       "source": "parts/linux/cloud-init/artifacts/mariner/update_certs_mariner.service",
       "destination": "/home/packer/update_certs.service"
     },
     {
+      "required": "maybe",
+      "status": "todo",
+      "note": "Immutable /usr makes this hard",
       "type": "file",
       "source": "parts/linux/cloud-init/artifacts/update_certs.path",
       "destination": "/home/packer/update_certs.path"
     },
     {
+      "required": "maybe",
+      "status": "todo",
+      "note": "Immutable /usr makes this hard",
       "type": "file",
       "source": "parts/linux/cloud-init/artifacts/update_certs.sh",
       "destination": "/home/packer/update_certs.sh"
     },
     {
+      "required": "true",
+      "status": "done",
       "type": "file",
       "source": "parts/linux/cloud-init/artifacts/ci-syslog-watcher.path",
       "destination": "/home/packer/ci-syslog-watcher.path"
     },
     {
+      "required": "true",
+      "status": "done",
       "type": "file",
       "source": "parts/linux/cloud-init/artifacts/ci-syslog-watcher.service",
       "destination": "/home/packer/ci-syslog-watcher.service"
     },
     {
+      "required": "true",
+      "status": "done",
       "type": "file",
       "source": "parts/linux/cloud-init/artifacts/ci-syslog-watcher.sh",
       "destination": "/home/packer/ci-syslog-watcher.sh"
     },
     {
+      "required": "true",
+      "status": "done",
       "type": "file",
       "source": "parts/linux/cloud-init/artifacts/aks-log-collector.sh",
       "destination": "/home/packer/aks-log-collector.sh"
     },
     {
+      "required": "true",
+      "status": "done",
       "type": "file",
       "source": "parts/linux/cloud-init/artifacts/aks-log-collector-send.py",
       "destination": "/home/packer/aks-log-collector-send.py"
     },
     {
+      "required": "true",
+      "status": "done",
       "type": "file",
       "source": "parts/linux/cloud-init/artifacts/aks-log-collector.service",
       "destination": "/home/packer/aks-log-collector.service"
     },
     {
+      "required": "true",
+      "status": "done",
       "type": "file",
       "source": "parts/linux/cloud-init/artifacts/aks-log-collector.slice",
       "destination": "/home/packer/aks-log-collector.slice"
     },
     {
+      "required": "true",
+      "status": "done",
       "type": "file",
       "source": "parts/linux/cloud-init/artifacts/aks-log-collector.timer",
       "destination": "/home/packer/aks-log-collector.timer"
     },
     {
+      "required": "true",
+      "status": "done",
       "type": "file",
       "source": "parts/linux/cloud-init/artifacts/aks-check-network.sh",
       "destination": "/home/packer/aks-check-network.sh"
     },
     {
+      "required": "true",
+      "status": "done",
       "type": "file",
       "source": "parts/linux/cloud-init/artifacts/aks-check-network.service",
       "destination": "/home/packer/aks-check-network.service"
     },
     {
+      "required": "false",
+      "status": "done",
+      "note": "we totally have logrotate already",
       "type": "file",
       "source": "parts/linux/cloud-init/artifacts/aks-logrotate.sh",
       "destination": "/home/packer/logrotate.sh"
     },
     {
+      "required": "false",
+      "status": "done",
+      "note": "we totally have logrotate already",
       "type": "file",
       "source": "parts/linux/cloud-init/artifacts/aks-logrotate.service",
       "destination": "/home/packer/logrotate.service"
     },
     {
+      "required": "false",
+      "status": "done",
+      "note": "we totally have logrotate already",
       "type": "file",
       "source": "parts/linux/cloud-init/artifacts/aks-logrotate.timer",
       "destination": "/home/packer/logrotate.timer"
     },
     {
+      "required": "true",
+      "status": "done",
       "type": "file",
       "source": "parts/linux/cloud-init/artifacts/aks-logrotate-override.conf",
       "destination": "/home/packer/override.conf"
     },
     {
+      "required": "todo",
+      "status": "todo",
       "type": "file",
       "source": "parts/linux/cloud-init/artifacts/aks-rsyslog",
       "destination": "/home/packer/rsyslog"
     },
     {
+      "required": "true",
+      "status": "todo",
+      "note": "added it... but why does it live in /etc/systemd/system?",
       "type": "file",
       "source": "parts/linux/cloud-init/artifacts/ipv6_nftables",
       "destination": "/home/packer/ipv6_nftables"
     },
     {
+      "required": "true",
+      "status": "done",
       "type": "file",
       "source": "parts/linux/cloud-init/artifacts/ipv6_nftables.service",
       "destination": "/home/packer/ipv6_nftables.service"
     },
     {
+      "required": "true",
+      "status": "done",
       "type": "file",
       "source": "parts/linux/cloud-init/artifacts/ipv6_nftables.sh",
       "destination": "/home/packer/ipv6_nftables.sh"
     },
     {
+      "required": "false",
+      "status": "done",
       "type": "file",
       "source": "parts/linux/cloud-init/artifacts/apt-preferences",
       "destination": "/home/packer/apt-preferences"
     },
     {
+      "required": "maybe",
+      "status": "todo",
+      "note": "added it... needs docker though, dig deeper",
       "type": "file",
       "source": "parts/linux/cloud-init/artifacts/kms.service",
       "destination": "/home/packer/kms.service"
     },
     {
+      "required": "future",
+      "status": "todo",
       "type": "file",
       "source": "parts/linux/cloud-init/artifacts/mig-partition.sh",
       "destination": "/home/packer/mig-partition.sh"
     },
     {
+      "required": "true",
+      "status": "todo",
       "type": "file",
       "source": "parts/linux/cloud-init/artifacts/containerd.service",
       "destination": "/home/packer/containerd.service"
     },
     {
+      "required": "future",
+      "status": "todo",
       "type": "file",
       "source": "kata-containers-igvm-debug.img",
       "destination": "/home/packer/kata-containers-igvm-debug.img"
     },
     {
+      "required": "future",
+      "status": "todo",
       "type": "file",
       "source": "kata-containers-igvm.img",
       "destination": "/home/packer/kata-containers-igvm.img"
     },
     {
+      "required": "future",
+      "status": "todo",
       "type": "file",
       "source": "kata-containers-initrd-base.img",
       "destination": "/home/packer/kata-containers-initrd-base.img"
     },
     {
+      "required": "future",
+      "status": "todo",
       "type": "file",
       "source": "kata-containers.img",
       "destination": "/home/packer/kata-containers.img"
     },
     {
+      "required": "future",
+      "status": "todo",
       "type": "file",
       "source": "reference-info-base64",
       "destination": "/home/packer/reference-info-base64"
     },
     {
+      "required": "todo",
+      "status": "todo",
       "type": "file",
       "source": "vhdbuilder/notice.txt",
       "destination": "/home/packer/NOTICE.txt"
@@ -600,6 +824,8 @@
       ]
     },
     {
+      "required": "todo",
+      "status": "todo",
       "type": "file",
       "direction": "download",
       "source": "/var/log/bcc_installation.log",
@@ -619,6 +845,8 @@
       ]
     },
     {
+      "required": "todo",
+      "status": "todo",
       "type": "file",
       "source": "vhdbuilder/packer/list-images.sh",
       "destination": "/home/packer/list-images.sh"
@@ -630,18 +858,24 @@
       ]
     },
     {
+      "required": "todo",
+      "status": "todo",
       "type": "file",
       "direction": "download",
       "source": "/opt/azure/containers/image-bom.json",
       "destination": "image-bom.json"
     },
     {
+      "required": "todo",
+      "status": "todo",
       "type": "file",
       "direction": "download",
       "source": "/opt/azure/vhd-install.complete",
       "destination": "release-notes.txt"
     },
     {
+      "required": "todo",
+      "status": "todo",
       "type": "file",
       "direction": "download",
       "source": "/opt/azure/vhd-build-performance-data.json",
