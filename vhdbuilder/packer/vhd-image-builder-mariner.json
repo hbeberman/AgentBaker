@@ -136,7 +136,7 @@
     {
       "required": "false",
       "note": "reimplement",
-      "status": "done",
+      "status": "todo",
       "type": "file",
       "source": "parts/linux/cloud-init/artifacts/cse_install.sh",
       "destination": "/home/packer/provision_installs.sh"

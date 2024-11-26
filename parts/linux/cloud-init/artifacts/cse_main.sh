@@ -122,10 +122,13 @@ else
     echo "Golden image; skipping dependencies installation"
 fi
 
-logs_to_events "AKS.CSE.installContainerRuntime" installContainerRuntime
-if [ "${NEEDS_CONTAINERD}" == "true" ] && [ "${TELEPORT_ENABLED}" == "true" ]; then 
-    logs_to_events "AKS.CSE.installTeleportdPlugin" installTeleportdPlugin
-fi
+# Container runtime already installed
+#logs_to_events "AKS.CSE.installContainerRuntime" installContainerRuntime
+
+# Skip teleportd for now
+#if [ "${NEEDS_CONTAINERD}" == "true" ] && [ "${TELEPORT_ENABLED}" == "true" ]; then 
+#    logs_to_events "AKS.CSE.installTeleportdPlugin" installTeleportdPlugin
+#fi
 
 setupCNIDirs
 
@@ -208,7 +211,8 @@ if [ "${NEEDS_DOCKER_LOGIN}" == "true" ]; then
     set -x
 fi
 
-logs_to_events "AKS.CSE.installKubeletKubectlAndKubeProxy" installKubeletKubectlAndKubeProxy
+# Disable for now until we can sysext the correct version in
+#logs_to_events "AKS.CSE.installKubeletKubectlAndKubeProxy" installKubeletKubectlAndKubeProxy
 
 createKubeManifestDir
 
@@ -320,9 +324,10 @@ if [ "${ENSURE_NO_DUPE_PROMISCUOUS_BRIDGE}" == "true" ]; then
     logs_to_events "AKS.CSE.ensureNoDupOnPromiscuBridge" ensureNoDupOnPromiscuBridge
 fi
 
-if [[ $OS == $UBUNTU_OS_NAME ]] || isMarinerOrAzureLinux "$OS"; then
-    logs_to_events "AKS.CSE.ubuntuSnapshotUpdate" ensureSnapshotUpdate
-fi
+# No snapshot update
+#if [[ $OS == $UBUNTU_OS_NAME ]] || isMarinerOrAzureLinux "$OS"; then
+#    logs_to_events "AKS.CSE.ubuntuSnapshotUpdate" ensureSnapshotUpdate
+#fi
 
 if $FULL_INSTALL_REQUIRED; then
     if [[ $OS == $UBUNTU_OS_NAME ]]; then
