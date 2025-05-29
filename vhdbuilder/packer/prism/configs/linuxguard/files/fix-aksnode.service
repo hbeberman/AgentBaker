@@ -1,0 +1,10 @@
+[Unit]
+Description=Fix AKSNode Extension
+After=network.target
+
+[Service]
+ExecStart=/usr/local/bin/fix-aksnode.sh
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
