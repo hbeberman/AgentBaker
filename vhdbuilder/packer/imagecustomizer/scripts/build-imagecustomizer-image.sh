@@ -6,13 +6,13 @@ set -euo pipefail
 
 # Find the absolute path of the directory containing this script
 SCRIPTS_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
+CONFIG=$IMG_CUSTOMIZER_CONFIG
 AGENTBAKER_DIR=`realpath $SCRIPTS_DIR/../../../../`
 BUILD_DIR="${AGENTBAKER_DIR}/build"
 OUT_DIR="${AGENTBAKER_DIR}/out"
-mkdir -p ${OUT_DIR}
-mkdir -p ${BUILD_DIR}
-
-CONFIG=$IMG_CUSTOMIZER_CONFIG
+mkdir -p "$OUT_DIR"
+mkdir -p "$BUILD_DIR"
+mkdir -p "$BUILD_DIR/$CONFIG"
 
 # Validate CONFIG and config file
 CONFIG_FILE="$AGENTBAKER_DIR/vhdbuilder/packer/imagecustomizer/$CONFIG/$CONFIG.yml"
@@ -27,16 +27,19 @@ if [[ ! -r "$CONFIG_FILE" ]]; then
     exit 1
 fi
 
-echo "Using following Image Customizer config:"
-cat $CONFIG_FILE
-
 IMAGE_PATH="${OUT_DIR}/$CONFIG/$CONFIG.vhd"
 
 BASE_IMAGE_ORAS=$BASE_IMG:$BASE_IMG_VERSION
-
 if [ ! -f "$BUILD_DIR/$CONFIG/image.vhd" ]; then
-    echo "Pulling base image from ORAS registry..."
-    oras pull $BASE_IMAGE_ORAS -o "$BUILD_DIR/$CONFIG"
+    echo "Pulling base image $BASE_IMAGE_ORAS from registry..."
+    docker run \
+        --rm \
+        --interactive \
+        --tty \
+        --privileged=true \
+        -v "$BUILD_DIR:/container/build" \
+        $IMG_CUSTOMIZER_CONTAINER:$IMG_CUSTOMIZER_VERSION \
+        oras pull $BASE_IMAGE_ORAS -o /container/build/$CONFIG
 else
     echo "Base image already exists, skipping pull."
 fi
@@ -44,12 +47,15 @@ fi
 # Generate repartd configuration files based on the disks section of aks-config.yaml
 $SCRIPTS_DIR/generate-repartd.sh $CONFIG_FILE $AGENTBAKER_DIR/parts/linux/cloud-init/artifacts/immutableazl/repart.d
 
+echo "Using following Image Customizer config:"
+cat $CONFIG_FILE
+
+echo Building $CONFIG_FILE image with Image Customizer...
 docker run \
     --rm \
     --interactive \
     --tty \
     --privileged=true \
-    -e BASE_IMAGE_NAME=linuxguard \
     -v "$BUILD_DIR:/container/build" \
     -v "$OUT_DIR:/container/out" \
     -v "$(realpath "$(dirname "$CONFIG_FILE")")":/container/config \
