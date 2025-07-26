@@ -35,7 +35,6 @@ if [ ! -f "$BUILD_DIR/$CONFIG/image.vhd" ]; then
     docker run \
         --rm \
         --interactive \
-        --tty \
         --privileged=true \
         -v "$BUILD_DIR:/container/build" \
         $IMG_CUSTOMIZER_CONTAINER:$IMG_CUSTOMIZER_VERSION \
@@ -54,7 +53,6 @@ echo Building $CONFIG_FILE image with Image Customizer...
 docker run \
     --rm \
     --interactive \
-    --tty \
     --privileged=true \
     -v "$BUILD_DIR:/container/build" \
     -v "$OUT_DIR:/container/out" \
