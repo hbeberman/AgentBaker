@@ -132,16 +132,16 @@ os:
     - oras
     - initramfs
   additionalDirs:
-    - source: /AgentBaker/parts/linux/cloud-init/artifacts/immutableazl/repart.d
+    - source: /AgentBaker/parts/linux/cloud-init/artifacts/azlosguard/repart.d
       destination: /etc/repart.d
       childFilePermissions: 644
   additionalFiles:
     # Include systemd-repart in the initrd
-    - source: /AgentBaker/parts/linux/cloud-init/artifacts/immutableazl/10-repart.conf
+    - source: /AgentBaker/parts/linux/cloud-init/artifacts/azlosguard/10-repart.conf
       destination: /etc/dracut.conf.d/10-repart.conf
       permissions: "644"
     # Set chrony to use /dev/ptp_hyperv
-    - source: /AgentBaker/parts/linux/cloud-init/artifacts/immutableazl/chrony.conf
+    - source: /AgentBaker/parts/linux/cloud-init/artifacts/azlosguard/chrony.conf
       destination: /etc/chrony.conf
       permissions: "644"
     # Fix systemd resolved caching
@@ -149,14 +149,14 @@ os:
       destination: /etc/systemd/system/resolv-uplink-override.service
       permissions: "600"
     # Fix additional IPs from azure datasource from being assigned to eth0
-    - source: /AgentBaker/parts/linux/cloud-init/artifacts/immutableazl/80_azure_net_config.cfg
+    - source: /AgentBaker/parts/linux/cloud-init/artifacts/azlosguard/80_azure_net_config.cfg
       destination: /etc/cloud/cloud.cfg.d/80_azure_net_config.cfg
       permissions: "644"
-    - source: /AgentBaker/parts/linux/cloud-init/artifacts/immutableazl/80_azure_disk_setup.cfg
+    - source: /AgentBaker/parts/linux/cloud-init/artifacts/azlosguard/80_azure_disk_setup.cfg
       destination: /etc/cloud/cloud.cfg.d/80_azure_disk_setup.cfg
       permissions: "644"
     # Setup systemd-sysext for temporary /usr/local/bin redirection to /opt/bin
-    - source: /AgentBaker/parts/linux/cloud-init/artifacts/immutableazl/extension-release.lg-redirect-sysext
+    - source: /AgentBaker/parts/linux/cloud-init/artifacts/azlosguard/extension-release.lg-redirect-sysext
       destination: /etc/extensions/lg-redirect-sysext/usr/lib/extension-release.d/extension-release.lg-redirect-sysext
       permissions: "644"
     # ===== cached sysexts =====
