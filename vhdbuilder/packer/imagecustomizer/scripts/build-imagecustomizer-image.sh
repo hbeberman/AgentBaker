@@ -44,7 +44,7 @@ else
 fi
 
 # Generate repartd configuration files based on the disks section of aks-config.yaml
-$SCRIPTS_DIR/generate-repartd.sh $CONFIG_FILE $AGENTBAKER_DIR/parts/linux/cloud-init/artifacts/immutableazl/repart.d
+$SCRIPTS_DIR/generate-repartd.sh $CONFIG_FILE $AGENTBAKER_DIR/parts/linux/cloud-init/artifacts/azlosguard/repart.d
 
 echo "Using following Image Customizer config:"
 cat $CONFIG_FILE
