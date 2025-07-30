@@ -389,6 +389,7 @@ os:
     enable:
     - kubelet
     - resolv-uplink-override
+    - measure-tls-bootstrapping-latency
     - systemd-sysext
     - ipv6_nftables
     disable:
