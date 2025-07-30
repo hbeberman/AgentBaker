@@ -23,6 +23,9 @@ source "${CSE_DISTRO_HELPERS_FILEPATH}"
 
 aptmarkWALinuxAgent hold &
 
+# Temporarily hardcode this setting to true since we dont get it from CSE
+AZURELINUX_OSGUARD_ENABLED=true
+
 # Setup logs for upload to host
 LOG_DIR=/var/log/azure/aks
 mkdir -p ${LOG_DIR}
@@ -163,14 +166,21 @@ else
     echo "Golden image; skipping dependencies installation"
 fi
 
-logs_to_events "AKS.CSE.installContainerRuntime" installContainerRuntime
-if [ "${NEEDS_CONTAINERD}" = "true" ] && [ "${TELEPORT_ENABLED}" = "true" ]; then 
+# Container runtime already installed on Azure Linux Immutable
+if [ "${AZURELINUX_OSGUARD_ENABLED}" != "true" ]; then
+    logs_to_events "AKS.CSE.installContainerRuntime" installContainerRuntime
+fi
+
+if [ "${NEEDS_CONTAINERD}" == "true" ] && [ "${TELEPORT_ENABLED}" == "true" ] && [ "${AZURELINUX_OSGUARD_ENABLED}" != "true" ]; then
     logs_to_events "AKS.CSE.installTeleportdPlugin" installTeleportdPlugin
 fi
 
 setupCNIDirs
 
-logs_to_events "AKS.CSE.installNetworkPlugin" installNetworkPlugin
+# Network plugin already installed on Azure Linux Immutable
+if [ "${AZURELINUX_OSGUARD_ENABLED}" != "true" ]; then
+    logs_to_events "AKS.CSE.installNetworkPlugin" installNetworkPlugin
+fi
 
 # By default, never reboot new nodes.
 REBOOTREQUIRED=false
@@ -233,7 +243,7 @@ if [ "${NEEDS_DOCKER_LOGIN}" = "true" ]; then
     set -x
 fi
 
-logs_to_events "AKS.CSE.installKubeletKubectlAndKubeProxy" installKubeletKubectlAndKubeProxy
+    logs_to_events "AKS.CSE.installKubeletKubectlAndKubeProxy" installKubeletKubectlAndKubeProxy
 
 createKubeManifestDir
 
@@ -347,7 +357,7 @@ if [ "${ENSURE_NO_DUPE_PROMISCUOUS_BRIDGE}" = "true" ]; then
     logs_to_events "AKS.CSE.ensureNoDupOnPromiscuBridge" ensureNoDupOnPromiscuBridge
 fi
 
-if [ "$OS" = "$UBUNTU_OS_NAME" ] || isMarinerOrAzureLinux "$OS"; then
+if ( [[ $OS == $UBUNTU_OS_NAME ]] || isMarinerOrAzureLinux "$OS" ) && [[ "${AZURELINUX_OSGUARD_ENABLED}" != "true" ]]; then
     logs_to_events "AKS.CSE.ubuntuSnapshotUpdate" ensureSnapshotUpdate
 fi
 
@@ -463,6 +473,8 @@ else
                 # Currently kata packages must be updated as a unit (including the kernel which requires a reboot). This can
                 # only be done reliably via image updates as of now so never enable automatic updates.
                 echo 'EnableUnattendedUpgrade is not supported by kata images, will not be enabled'
+            elif [ "${AZURELINUX_OSGUARD_ENABLED}" == "true" ]; then
+                echo 'EnableUnattendedUpgrade is not supported by Azure Linux Immutable images, will not be enabled'
             else
                 # By default the dnf-automatic is service is notify only in Mariner.
                 # Enable the automatic install timer and the check-restart timer.
