@@ -327,6 +327,13 @@ os:
     - source: /AgentBaker/parts/linux/cloud-init/artifacts/ci-syslog-watcher.path
       destination: /etc/systemd/system/ci-syslog-watcher.path
       permissions: "600"
+    # measure-tls-bootstrapping-latency
+    - source: /AgentBaker/parts/linux/cloud-init/artifacts/measure-tls-bootstrapping-latency.sh
+      destination: /opt/azure/containers/measure-tls-bootstrapping-latency.sh
+      permissions: "755"
+    - source: /AgentBaker/parts/linux/cloud-init/artifacts/measure-tls-bootstrapping-latency.service
+      destination: /etc/systemd/system/measure-tls-bootstrapping-latency.service
+      permissions: "600"
     # aks log collector
     - source: /AgentBaker/parts/linux/cloud-init/artifacts/aks-log-collector.sh
       destination: /opt/azure/containers/aks-log-collector.sh
