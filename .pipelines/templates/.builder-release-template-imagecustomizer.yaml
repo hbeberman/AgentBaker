@@ -65,7 +65,7 @@ steps:
     condition: ne(variables['BUILDER'], 'imagecustomizer')
 
   - bash: make -f packer.mk run-imagecustomizer
-    displayName: Build VHD
+    displayName: Build VHD - Image Customizer
     retryCountOnTaskFailure: 3
     env:
       OS_TYPE: Linux
@@ -74,7 +74,6 @@ steps:
       BUILD_NUMBER: $(Build.BuildNumber)
       BUILD_ID: $(Build.BuildId)
       BUILD_DEFINITION_NAME: $(Build.DefinitionName)
-      UA_TOKEN: $(ua-token)
     condition: eq(variables['BUILDER'], 'imagecustomizer')
 
   - bash: |
@@ -110,6 +109,12 @@ steps:
       echo "##vso[task.setvariable variable=VHD_DEBUG]False"
     condition: always()
     displayName: Set Pipeline Variables
+
+  - bash: make -f packer.mk publish-imagecustomizer
+    displayName: Publish VHD - Image Customizer
+    retryCountOnTaskFailure: 3
+    condition: eq(variables['BUILDER'], 'imagecustomizer')
+
 #
 #  - bash: make -f packer.mk test-scan-and-cleanup
 #    condition: always()
@@ -191,6 +196,7 @@ steps:
 #    displayName: Convert Shared Image Gallery To VHD Blob In Classic Storage Account
 #    env:
 #      RESOURCE_GROUP_NAME: $(AZURE_RESOURCE_GROUP_NAME)
+#    condition: ne(variables['BUILDER'], 'imagecustomizer')
 #  
 #  - task: DownloadPipelineArtifact@2
 #    displayName: Download Build Performance Program

@@ -1,7 +1,4 @@
 #!/bin/bash
-# Build imagecustomizer image
-# Usage: build-imagecustomizer-image.sh <CONFIG>
-
 set -euo pipefail
 
 # Find the absolute path of the directory containing this script
@@ -43,9 +40,6 @@ else
     echo "Base image already exists, skipping pull."
 fi
 
-# Generate repartd configuration files based on the disks section of aks-config.yaml
-$SCRIPTS_DIR/generate-repartd.sh $CONFIG_FILE $AGENTBAKER_DIR/parts/linux/cloud-init/artifacts/azlosguard/repart.d
-
 echo "Using following Image Customizer config:"
 cat $CONFIG_FILE
 
@@ -66,7 +60,6 @@ docker run \
         --build-dir /container/build \
         --image-file /container/build/$CONFIG/osguard.vhdx \
         --output-image-format vhd-fixed \
-        --output-image-file /container/out/$CONFIG/"$(basename "$IMAGE_PATH")" \
-        --rpm-source "/container/config/azurelinux-cloud-native.repo"
+        --output-image-file /container/out/$CONFIG/"$(basename "$IMAGE_PATH")"
 
 cp $IMAGE_PATH $OUT_DIR/$CONFIG.vhd
