@@ -52,6 +52,7 @@ steps:
     displayName: Set SKU Name
   
   - bash: make -f packer.mk run-packer
+    condition: ne(variables['BUILDER'], 'imagecustomizer')
     displayName: Build VHD
     retryCountOnTaskFailure: 3
     env:
@@ -62,9 +63,9 @@ steps:
       BUILD_ID: $(Build.BuildId)
       BUILD_DEFINITION_NAME: $(Build.DefinitionName)
       UA_TOKEN: $(ua-token)
-    condition: ne(variables['BUILDER'], 'imagecustomizer')
 
   - bash: make -f packer.mk run-imagecustomizer
+    condition: eq(variables['BUILDER'], 'imagecustomizer')
     displayName: Build VHD - Image Customizer
     retryCountOnTaskFailure: 3
     env:
@@ -74,7 +75,6 @@ steps:
       BUILD_NUMBER: $(Build.BuildNumber)
       BUILD_ID: $(Build.BuildId)
       BUILD_DEFINITION_NAME: $(Build.DefinitionName)
-    condition: eq(variables['BUILDER'], 'imagecustomizer')
 
   - bash: |
       PACKER_VNET_RESOURCE_GROUP_NAME="$(cat vhdbuilder/packer/settings.json | grep "vnet_resource_group_name" | awk -F':' '{print $2}' | awk -F'"' '{print $2}')" && \
@@ -111,9 +111,11 @@ steps:
     displayName: Set Pipeline Variables
 
   - bash: make -f packer.mk publish-imagecustomizer
+    condition: eq(variables['BUILDER'], 'imagecustomizer')
     displayName: Publish VHD - Image Customizer
     retryCountOnTaskFailure: 3
-    condition: eq(variables['BUILDER'], 'imagecustomizer')
+    env:
+      RESOURCE_GROUP_NAME: $(AZURE_RESOURCE_GROUP_NAME)
 
   - bash: make -f packer.mk test-scan-and-cleanup
     condition: always()
