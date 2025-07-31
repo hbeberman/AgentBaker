@@ -1,6 +1,5 @@
 #!/bin/bash
 set -e
-# avoid using set -x in this pipeline as you'll end up logging a sensitive access token down below.
 
 source ./parts/linux/cloud-init/artifacts/cse_benchmark_functions.sh
 
@@ -12,6 +11,9 @@ OUT_DIR="${AGENTBAKER_DIR}/out"
 
 required_env_vars=(
     "AZURE_MSI_RESOURCE_STRING"
+    "RESOURCE_GROUP_NAME"
+    "SIG_IMAGE_NAME"
+    "SUBSCRIPTION_ID"
     "CAPTURED_SIG_VERSION"
 )
 
@@ -22,6 +24,11 @@ do
         exit 1
     fi
 done
+
+# Default to this hard-coded value for Linux does not pass this environment variable into here
+if [ -z "$SIG_GALLERY_NAME" ]; then
+  SIG_GALLERY_NAME="PackerSigGalleryEastUS"
+fi
 
 capture_benchmark "${SCRIPT_NAME}_prepare_upload_vhd_to_blob"
 
@@ -36,4 +43,13 @@ azcopy copy "${OUT_DIR}/${CONFIG}.vhd" "${CLASSIC_BLOB}/${CAPTURED_SIG_VERSION}.
 echo "Uploaded ${OUT_DIR}/${CONFIG}.vhd to ${CLASSIC_BLOB}/${CAPTURED_SIG_VERSION}.vhd"
 capture_benchmark "${SCRIPT_NAME}_upload_vhd_to_blob"
 
-# TODO: add an acg image version publish
+sig_resource_id="/subscriptions/${SUBSCRIPTION_ID}/resourceGroups/${RESOURCE_GROUP_NAME}/providers/Microsoft.Compute/galleries/${SIG_GALLERY_NAME}/images/${SIG_IMAGE_NAME}/versions/${CAPTURED_SIG_VERSION}"
+
+echo "Creating SIG image version: $sig_resource_id"
+az sig image-version create \
+    --resource-group ${RESOURCE_GROUP_NAME} \
+    --gallery-name ${SIG_GALLERY_NAME} \
+    --gallery-image-definition ${SIG_IMAGE_NAME} \
+    --gallery-image-version ${CAPTURED_SIG_VERSION} \
+    --managed-image-id ${CLASSIC_BLOB}/${CAPTURED_SIG_VERSION}.vhd
+capture_benchmark "${SCRIPT_NAME}_create_sig_image_version"

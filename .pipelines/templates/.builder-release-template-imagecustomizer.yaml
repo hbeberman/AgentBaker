@@ -115,130 +115,136 @@ steps:
     retryCountOnTaskFailure: 3
     condition: eq(variables['BUILDER'], 'imagecustomizer')
 
-#
-#  - bash: make -f packer.mk test-scan-and-cleanup
-#    condition: always()
-#    displayName: Test, Scan, and Cleanup
-#    env:
-#      BUILD_REPOSITORY_NAME: $(Build.Repository.Name)
-#      BUILD_SOURCEVERSION: $(Build.SourceVersion)
-#      SYSTEM_COLLECTIONURI: $(System.CollectionUri)
-#      SYSTEM_TEAMPROJECT: $(System.TeamProject)
-#      BUILD_RUN_NUMBER: $(Build.BuildNumber)
-#      VHD_ARTIFACT_NAME: ${{ parameters.artifactName }}
-#      SUBSCRIPTION_ID: $(SUBSCRIPTION_ID)
-#      PACKER_VNET_RESOURCE_GROUP_NAME: $(PACKER_VNET_RESOURCE_GROUP_NAME)
-#      PACKER_VNET_NAME: $(PACKER_VNET_NAME)
-#      SKIP_SCANNING: $(SKIP_SCANNING)
-#      DRY_RUN: $(DRY_RUN)
-#
-#  - task: PublishPipelineArtifact@0
-#    condition: always()
-#    displayName: Publish BCC Tools Installation Log
-#    inputs:
-#      artifactName: 'bcc-tools-installation-log-$(ARTIFACT_ID)-${{ parameters.artifactName }}'
-#      targetPath: 'bcc-tools-installation.log'
-#
-#  - task: CopyFiles@2
-#    condition: always()
-#    displayName: Copy BCC Tools Installation Log
-#    inputs:
-#      Overwrite: true
-#      SourceFolder: '$(System.DefaultWorkingDirectory)'
-#      Contents: 'bcc-tools-installation.log'
-#      TargetFolder: '$(Build.ArtifactStagingDirectory)'
-#
-#  - task: CopyFiles@2
-#    condition: eq(variables['IS_NOT_1804'], 'true')
-#    displayName: Copy Trivy Report
-#    inputs:
-#      SourceFolder: '$(System.DefaultWorkingDirectory)'
-#      Contents: 'trivy-report.json'
-#      TargetFolder: '$(Build.ArtifactStagingDirectory)'
-#
-#  - task: CopyFiles@2
-#    condition: eq(variables['IS_NOT_1804'], 'true')
-#    displayName: Copy Trivy Table
-#    inputs:
-#      SourceFolder: '$(System.DefaultWorkingDirectory)'
-#      Contents: 'trivy-images-table.txt'
-#      TargetFolder: '$(Build.ArtifactStagingDirectory)'
-#
-#  - task: PublishPipelineArtifact@0
-#    displayName: Publish Release Notes
-#    inputs:
-#      artifactName: 'vhd-release-notes-${{ parameters.artifactName }}'
-#      targetPath: 'release-notes.txt'
-#
-#  - task: CopyFiles@2
-#    displayName: Copy Release Notes
-#    inputs:
-#      SourceFolder: '$(System.DefaultWorkingDirectory)'
-#      Contents: 'release-notes.txt'
-#      TargetFolder: '$(Build.ArtifactStagingDirectory)'
-#
-#  - task: PublishPipelineArtifact@0
-#    displayName: Publish Container Image List
-#    inputs:
-#      artifactName: 'vhd-image-bom-${{ parameters.artifactName }}'
-#      targetPath: 'image-bom.json'
-#
-#  - task: CopyFiles@2
-#    condition: succeeded()
-#    displayName: Copy Image Bom
-#    inputs:
-#      SourceFolder: '$(System.DefaultWorkingDirectory)'
-#      Contents: 'image-bom.json'
-#      TargetFolder: '$(Build.ArtifactStagingDirectory)'
-#
-#  - bash: make -f packer.mk convert-sig-to-classic-storage-account-blob
-#    condition: and(succeeded(), eq(variables.GENERATE_PUBLISHING_INFO, 'True'))
-#    displayName: Convert Shared Image Gallery To VHD Blob In Classic Storage Account
-#    env:
-#      RESOURCE_GROUP_NAME: $(AZURE_RESOURCE_GROUP_NAME)
-#    condition: ne(variables['BUILDER'], 'imagecustomizer')
-#  
-#  - task: DownloadPipelineArtifact@2
-#    displayName: Download Build Performance Program
-#    condition: and(succeeded(), eq(variables.ENVIRONMENT, 'tme'))
-#    inputs:
-#      source: "specific"
-#      downloadPath: "vhdbuilder/packer/buildperformance"
-#      runVersion: "latest"
-#      project: $(System.TeamProject)
-#      pipeline: $(SOURCE_PIPELINE) 
-#      artifactName: $(BUILD_PERFORMANCE_ARTIFACT_NAME)
-#
-#  - bash: make -f packer.mk evaluate-build-performance
-#    condition: always()
-#    displayName: Check Build Performance
-#
-#  - bash: make -f packer.mk generate-publishing-info
-#    displayName: Generate Publishing Info
-#    condition: and(succeeded(), eq(variables.GENERATE_PUBLISHING_INFO, 'True'))
-#    env:
-#      RESOURCE_GROUP_NAME: $(AZURE_RESOURCE_GROUP_NAME)
-#      STORAGE_ACCT_BLOB_URL: $(CLASSIC_BLOB)
-#      OFFER_NAME: $(OS_SKU)
-#
-#  - task: PublishPipelineArtifact@1
-#    condition: and(succeeded(), eq(variables.GENERATE_PUBLISHING_INFO, 'True'))
-#    displayName: Publish Publishing Info
-#    inputs:
-#      artifactName: 'publishing-info-${{ parameters.artifactName }}'
-#      targetPath: 'vhd-publishing-info.json'
-#
-#  - task: CopyFiles@2
-#    condition: and(succeeded(), eq(variables.GENERATE_PUBLISHING_INFO, 'True'))
-#    displayName: Copy Publishing Info
-#    inputs:
-#      SourceFolder: '$(System.DefaultWorkingDirectory)'
-#      Contents: 'vhd-publishing-info.json'
-#      TargetFolder: '$(Build.ArtifactStagingDirectory)'
-#
-#  - task: PublishPipelineArtifact@0
-#    condition: succeeded()
-#    displayName: Publish Artifacts
-#    inputs:
-#      artifactName: '${{ parameters.artifactName }}'
-#      targetPath: '$(Build.ArtifactStagingDirectory)'
+  - bash: make -f packer.mk test-scan-and-cleanup
+    condition: always()
+    displayName: Test, Scan, and Cleanup
+    env:
+      BUILD_REPOSITORY_NAME: $(Build.Repository.Name)
+      BUILD_SOURCEVERSION: $(Build.SourceVersion)
+      SYSTEM_COLLECTIONURI: $(System.CollectionUri)
+      SYSTEM_TEAMPROJECT: $(System.TeamProject)
+      BUILD_RUN_NUMBER: $(Build.BuildNumber)
+      VHD_ARTIFACT_NAME: ${{ parameters.artifactName }}
+      SUBSCRIPTION_ID: $(SUBSCRIPTION_ID)
+      PACKER_VNET_RESOURCE_GROUP_NAME: $(PACKER_VNET_RESOURCE_GROUP_NAME)
+      PACKER_VNET_NAME: $(PACKER_VNET_NAME)
+      SKIP_SCANNING: $(SKIP_SCANNING)
+      DRY_RUN: $(DRY_RUN)
+
+  - task: PublishPipelineArtifact@0
+    condition: always()
+    displayName: Publish BCC Tools Installation Log
+    inputs:
+      artifactName: 'bcc-tools-installation-log-$(ARTIFACT_ID)-${{ parameters.artifactName }}'
+      targetPath: 'bcc-tools-installation.log'
+
+  - task: CopyFiles@2
+    condition: always()
+    displayName: Copy BCC Tools Installation Log
+    inputs:
+      Overwrite: true
+      SourceFolder: '$(System.DefaultWorkingDirectory)'
+      Contents: 'bcc-tools-installation.log'
+      TargetFolder: '$(Build.ArtifactStagingDirectory)'
+
+  - task: CopyFiles@2
+    displayName: Copy Trivy Report
+    inputs:
+      SourceFolder: '$(System.DefaultWorkingDirectory)'
+      Contents: 'trivy-report.json'
+      TargetFolder: '$(Build.ArtifactStagingDirectory)'
+
+  - task: CopyFiles@2
+    displayName: Copy Trivy Table
+    inputs:
+      SourceFolder: '$(System.DefaultWorkingDirectory)'
+      Contents: 'trivy-images-table.txt'
+      TargetFolder: '$(Build.ArtifactStagingDirectory)'
+
+  - task: CopyFiles@2
+    condition: and(eq(variables.OS_SKU, 'Ubuntu'), in(variables.OS_VERSION, '22.04', '24.04'), eq(variables.FEATURE_FLAGS, 'None'))
+    displayName: Copy CIS Reports
+    inputs:
+      SourceFolder: '$(System.DefaultWorkingDirectory)'
+      Contents: |
+        cis-report.html
+        cis-report.txt
+      TargetFolder: '$(Build.ArtifactStagingDirectory)'
+
+  - task: PublishPipelineArtifact@0
+    displayName: Publish Release Notes
+    inputs:
+      artifactName: 'vhd-release-notes-${{ parameters.artifactName }}'
+      targetPath: 'release-notes.txt'
+
+  - task: CopyFiles@2
+    displayName: Copy Release Notes
+    inputs:
+      SourceFolder: '$(System.DefaultWorkingDirectory)'
+      Contents: 'release-notes.txt'
+      TargetFolder: '$(Build.ArtifactStagingDirectory)'
+
+  - task: PublishPipelineArtifact@0
+    displayName: Publish Container Image List
+    inputs:
+      artifactName: 'vhd-image-bom-${{ parameters.artifactName }}'
+      targetPath: 'image-bom.json'
+
+  - task: CopyFiles@2
+    condition: succeeded()
+    displayName: Copy Image Bom
+    inputs:
+      SourceFolder: '$(System.DefaultWorkingDirectory)'
+      Contents: 'image-bom.json'
+      TargetFolder: '$(Build.ArtifactStagingDirectory)'
+
+  - bash: make -f packer.mk convert-sig-to-classic-storage-account-blob
+    condition: and(succeeded(), eq(variables.GENERATE_PUBLISHING_INFO, 'True'))
+    displayName: Convert Shared Image Gallery To VHD Blob In Classic Storage Account
+    env:
+      RESOURCE_GROUP_NAME: $(AZURE_RESOURCE_GROUP_NAME)
+  
+  - task: DownloadPipelineArtifact@2
+    displayName: Download Build Performance Program
+    condition: and(succeeded(), eq(variables.ENVIRONMENT, 'tme'))
+    inputs:
+      source: "specific"
+      downloadPath: "vhdbuilder/packer/buildperformance"
+      runVersion: "latest"
+      project: $(System.TeamProject)
+      pipeline: $(SOURCE_PIPELINE) 
+      artifactName: $(BUILD_PERFORMANCE_ARTIFACT_NAME)
+
+  - bash: make -f packer.mk evaluate-build-performance
+    condition: always()
+    displayName: Check Build Performance
+
+  - bash: make -f packer.mk generate-publishing-info
+    displayName: Generate Publishing Info
+    condition: and(succeeded(), eq(variables.GENERATE_PUBLISHING_INFO, 'True'))
+    env:
+      RESOURCE_GROUP_NAME: $(AZURE_RESOURCE_GROUP_NAME)
+      STORAGE_ACCT_BLOB_URL: $(CLASSIC_BLOB)
+      OFFER_NAME: $(OS_SKU)
+
+  - task: PublishPipelineArtifact@1
+    condition: and(succeeded(), eq(variables.GENERATE_PUBLISHING_INFO, 'True'))
+    displayName: Publish Publishing Info
+    inputs:
+      artifactName: 'publishing-info-${{ parameters.artifactName }}'
+      targetPath: 'vhd-publishing-info.json'
+
+  - task: CopyFiles@2
+    condition: and(succeeded(), eq(variables.GENERATE_PUBLISHING_INFO, 'True'))
+    displayName: Copy Publishing Info
+    inputs:
+      SourceFolder: '$(System.DefaultWorkingDirectory)'
+      Contents: 'vhd-publishing-info.json'
+      TargetFolder: '$(Build.ArtifactStagingDirectory)'
+
+  - task: PublishPipelineArtifact@0
+    condition: succeeded()
+    displayName: Publish Artifacts
+    inputs:
+      artifactName: '${{ parameters.artifactName }}'
+      targetPath: '$(Build.ArtifactStagingDirectory)'
