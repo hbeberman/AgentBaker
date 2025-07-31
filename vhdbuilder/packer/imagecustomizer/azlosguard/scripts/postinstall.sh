@@ -15,3 +15,6 @@ mkdir -p /usr/local/share/ca-certificates/
 mkdir -p /etc/extensions/lg-redirect-sysext/usr/local/
 mkdir -p /opt/bin
 ln -s /opt/bin /etc/extensions/lg-redirect-sysext/usr/local/bin
+
+# Place ci-syslog.watcher.sh into the /usr/local/bin overlay
+mv /opt/scripts/ci-syslog-watcher.sh /usr/local/bin/ci-syslog-watcher.sh
