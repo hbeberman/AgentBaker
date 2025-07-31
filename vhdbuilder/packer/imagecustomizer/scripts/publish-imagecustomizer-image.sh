@@ -43,6 +43,21 @@ azcopy copy "${OUT_DIR}/${CONFIG}.vhd" "${CLASSIC_BLOB}/${CAPTURED_SIG_VERSION}.
 echo "Uploaded ${OUT_DIR}/${CONFIG}.vhd to ${CLASSIC_BLOB}/${CAPTURED_SIG_VERSION}.vhd"
 capture_benchmark "${SCRIPT_NAME}_upload_vhd_to_blob"
 
+# Use the domain name from the classic blob URL to get the storage account name.
+# If the CLASSIC_BLOB var is not set create a new var called BLOB_STORAGE_NAME in the pipeline.
+BLOB_URL_REGEX="^https:\/\/.+\.blob\.core\.windows\.net\/vhd(s)?$"
+# shellcheck disable=SC3010
+if [[ $CLASSIC_BLOB =~ $BLOB_URL_REGEX ]]; then
+    STORAGE_ACCOUNT_NAME=$(echo $CLASSIC_BLOB | sed -E 's|https://(.*)\.blob\.core\.windows\.net(:443)?/(.*)?|\1|')
+else
+    # Used in the 'AKS Linux VHD Build - PR check-in gate' pipeline.
+    if [ -z "$BLOB_STORAGE_NAME" ]; then
+        echo "BLOB_STORAGE_NAME is not set, please either set the CLASSIC_BLOB var or create a new var BLOB_STORAGE_NAME in the pipeline."
+        exit 1
+    fi
+    STORAGE_ACCOUNT_NAME=${BLOB_STORAGE_NAME}
+fi
+
 sig_resource_id="/subscriptions/${SUBSCRIPTION_ID}/resourceGroups/${RESOURCE_GROUP_NAME}/providers/Microsoft.Compute/galleries/${SIG_GALLERY_NAME}/images/${SIG_IMAGE_NAME}/versions/${CAPTURED_SIG_VERSION}"
 
 echo "Creating SIG image version: $sig_resource_id"
@@ -51,5 +66,6 @@ az sig image-version create \
     --gallery-name ${SIG_GALLERY_NAME} \
     --gallery-image-definition ${SIG_IMAGE_NAME} \
     --gallery-image-version ${CAPTURED_SIG_VERSION} \
-    --managed-image-id ${CLASSIC_BLOB}/${CAPTURED_SIG_VERSION}.vhd
+    --os-vhd-storage-account /subscriptions/${SUBSCRIPTION_ID}/resourceGroups/${RESOURCE_GROUP_NAME}/providers/Microsoft.Storage/storageAccounts/${STORAGE_ACCOUNT_NAME} \
+    --os-vhd-uri ${CLASSIC_BLOB}/${CAPTURED_SIG_VERSION}.vhd
 capture_benchmark "${SCRIPT_NAME}_create_sig_image_version"
