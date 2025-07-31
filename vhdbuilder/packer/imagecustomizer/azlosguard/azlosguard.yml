@@ -3,7 +3,6 @@ storage:
 
   disks:
   - partitionTableType: gpt
-    # The repart.d configurations in files/repart.d must be kept in sync with these partitions
     partitions:
     - id: esp
       type: esp
@@ -324,11 +323,6 @@ os:
 
   bootloader:
     resetType: hard-reset
-
-  modules:
-  # Explicitly enable iptable_nat for prometheus
-  - name: iptable_nat
-    loadMode: always
 
   kernelCommandLine:
     extraCommandLine:
