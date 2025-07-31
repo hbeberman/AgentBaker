@@ -875,7 +875,7 @@ stages:
               echo '##vso[task.setvariable variable=SGX_INSTALL]False'
               echo '##vso[task.setvariable variable=ENABLE_CGROUPV2]True'
             displayName: Setup Build Variables
-          - template: ./templates/.builder-release-template-imagecustomizer.yaml
+          - template: ./templates/.builder-release-template.yaml
             parameters:
               useOverrides: ${{ parameters.useOverrides }}
               overrideBranch: ${{ parameters.overrideBranch }}
