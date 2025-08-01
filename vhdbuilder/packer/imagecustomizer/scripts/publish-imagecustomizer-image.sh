@@ -69,3 +69,6 @@ az sig image-version create \
     --os-vhd-storage-account /subscriptions/${SUBSCRIPTION_ID}/resourceGroups/${RESOURCE_GROUP_NAME}/providers/Microsoft.Storage/storageAccounts/${STORAGE_ACCOUNT_NAME} \
     --os-vhd-uri ${CLASSIC_BLOB}/${CAPTURED_SIG_VERSION}.vhd
 capture_benchmark "${SCRIPT_NAME}_create_sig_image_version"
+
+# Set SIG ID in pipeline for use during testing 
+echo "##vso[task.setvariable variable=MANAGED_SIG_ID]$sig_resource_id"
