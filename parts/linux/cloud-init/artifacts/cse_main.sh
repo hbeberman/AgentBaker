@@ -263,8 +263,10 @@ EOF
         logs_to_events "AKS.CSE.ensureNoDupOnPromiscuBridge" ensureNoDupOnPromiscuBridge
     fi
 
-    if [ "$OS" = "$UBUNTU_OS_NAME" ] || isMarinerOrAzureLinux "$OS"; then
-        logs_to_events "AKS.CSE.ubuntuSnapshotUpdate" ensureSnapshotUpdate
+    if [ "${AZURELINUX_OSGUARD_ENABLED}" != "true" ]; then
+        if [ "$OS" = "$UBUNTU_OS_NAME" ] || isMarinerOrAzureLinux "$OS"; then
+            logs_to_events "AKS.CSE.ubuntuSnapshotUpdate" ensureSnapshotUpdate
+        fi
     fi
 
     if [ "$FULL_INSTALL_REQUIRED" = "true" ]; then
