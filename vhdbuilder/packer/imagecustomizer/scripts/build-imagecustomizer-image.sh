@@ -63,3 +63,6 @@ docker run \
         --output-image-file /container/out/$CONFIG/"$(basename "$IMAGE_PATH")"
 
 cp $IMAGE_PATH $OUT_DIR/$CONFIG.vhd
+
+# Place build artifacts where later pipeline stages expect them
+cp "$AGENTBAKER_DIR/vhdbuilder/packer/imagecustomizer/$CONFIG/out/release-notes.txt" "$AGENTBAKER_DIR"

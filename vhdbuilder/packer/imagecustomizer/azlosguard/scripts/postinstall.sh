@@ -18,3 +18,7 @@ ln -s /opt/bin /etc/extensions/lg-redirect-sysext/usr/local/bin
 
 # Place ci-syslog.watcher.sh into the /usr/local/bin overlay
 mv /opt/scripts/ci-syslog-watcher.sh /usr/local/bin/ci-syslog-watcher.sh
+
+# Create release-notes.txt
+mkdir -p /_imageconfigs/out
+echo "release notes stub" >> /_imageconfigs/out/release-notes.txt
