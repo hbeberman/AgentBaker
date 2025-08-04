@@ -1,86 +1,4 @@
-storage:
-  bootType: efi
-
-  disks:
-  - partitionTableType: gpt
-    partitions:
-    - id: esp
-      type: esp
-      label: esp
-      size: 512M
-
-    - id: trident
-      type: linux-generic
-      label: trident
-      size: 512M
-
-    - id: boot-a
-      type: linux-generic
-      label: boot-a
-      size: 100M
-
-    - id: usr-a
-      type: usr
-      size: 1G
-
-    - id: usr-hash-a
-      type: usr-verity
-      size: 128M
-
-    - id: root-a
-      type: root
-      label: root-a
-      size: 4G
-
-  verity:
-    - id: usrverity
-      name: usr
-      dataDeviceId: usr-a
-      hashDeviceId: usr-hash-a
-      dataDeviceMountIdType: uuid
-      hashDeviceMountIdType: uuid
-
-  filesystems:
-  - deviceId: esp
-    type: fat32
-    mountPoint:
-      idType: part-label
-      path: /boot/efi
-      options: umask=0077,noexec,nodev,nosuid
-
-  - deviceId: boot-a
-    type: ext4
-    mountPoint:
-      idType: uuid
-      path: /boot
-      options: noexec,nodev,nosuid
-
-  - deviceId: usrverity
-    type: ext4
-    mountPoint:
-      path: /usr
-      options: ro,nodev
-
-  - deviceId: root-a
-    type: ext4
-    mountPoint:
-      path: /
-      options: nodev,nosuid,x-initrd.mount,x-systemd.growfs
-      # Add noexec after https://dev.azure.com/mariner-org/ECF/_workitems/edit/12366
-
-  - deviceId: trident
-    type: ext4
-    mountPoint:
-      idType: part-label
-      path: /var/lib/trident
-
 os:
-  packages:
-    install:
-    - vim
-    - wget
-    - git # linux-vhd-content-test.sh
-
   additionalFiles:
     # Fix systemd resolved caching
     - source: /AgentBaker/parts/linux/cloud-init/artifacts/resolv-uplink-override.service
@@ -330,22 +248,6 @@ os:
   bootloader:
     resetType: hard-reset
 
-  kernelCommandLine:
-    extraCommandLine:
-      - console=tty0
-      - console=tty1
-      - console=ttyS0
-      - rd.luks=0
-      - rd.hostonly=0
-      - ipe.enforce=0
-      - fips=1
-
-  uki:
-    kernels: auto
-
-  selinux:
-    mode: permissive
-
   users:
   - name: azuresu
     secondaryGroups:
@@ -353,6 +255,7 @@ os:
 
 previewFeatures:
   - uki
+  - reinitialize-verity
 
 scripts:
   postCustomization:
